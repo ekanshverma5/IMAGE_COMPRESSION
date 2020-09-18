@@ -1,0 +1,122 @@
+<html>
+    <title>LOSSLESS IMAGE COMPRESSION</title>
+    <br>
+    
+   <style type="text/css">
+
+   .header0{ position: absolute;
+       margin-left:35%; margin-top:25px;
+       color:green;}
+   .header1   {       position: absolute;
+       margin-left:40.5%; margin-top:25px;
+       color:yellowgreen; }
+   .header2 {
+       position: absolute;
+       margin-left:48%; margin-top:25px;
+       color:greenyellow;}
+   .header3 {
+       position: absolute;
+       margin-left:48%; margin-top:25px;
+       margin-left:56%; 
+       color:green;  }
+   .cmprss{
+           position: absolute;
+           margin-top:12%;
+           margin-left:53%     }
+   .image{position: absolute;
+   margin-top:12%;
+   margin-left:37%;
+    }
+    .logo
+    {
+        position: absolute;
+        margin-left:28%;        
+    }
+    .one{
+        position: absolute;
+        margin-top:20%;
+        margin-left:35%;
+    }
+    #input{
+        position: absolute;
+        margin-left:25%;
+        margin-top:25%;
+    }
+    #output{
+        position: absolute;
+        margin-left:55%;
+        margin-top:25%;
+    }
+</style>
+    <script type="text/javascript">
+         function compress()
+         {
+          const file=document.querySelector("#upload").files[0];
+          
+          if(!file){alert("NO IMAGE FOUND");return;} //if there are no pictures the code will terminate
+
+          const reader= new FileReader();
+
+          reader.readAsDataURL(file);
+
+          reader.onload=function(event)
+          {
+              const imgElement=document.createElement("img");
+
+              imgElement.src=event.target.result;
+              document.querySelector("#input").src=event.target.result;
+
+              imgElement.onload=function(e)
+              {
+                  const canvas=document.createElement("canvas");
+                  const MAX_WIDTH=400;
+
+                  const scaleSize=MAX_WIDTH/e.target.width;
+                  canvas.width=MAX_WIDTH;
+                  canvas.height=e.target.height*scaleSize;
+
+
+                  const ctx=canvas.getContext("2d");
+
+                  ctx.drawImage(e.target,0, 0, canvas.width,canvas.height);
+                 console.log(e.target);
+
+                  const srcEncoded=ctx.canvas.toDataURL(e.target,"image/jpeg");
+                  document.querySelector("#output").src=srcEncoded;
+                  
+              }
+          }
+
+         }
+    </script>
+    
+    <body>
+        
+       <div >
+        <div class="header0"><h1>LOSS</h1></div>
+        <div class="header1"><h1>LESS</h1></div>
+        <div class="header2"><h1>COMPR</h1></div>
+        <div class="header3"><h1>ESSION</h1></div>
+        <div class="logo">
+            <img src="./logo1.jpg" height="120" width="110">
+        </div>>
+    </div>
+        <div class="one">
+       
+            This is a free wbesite that provides Lossless Image Compression services.
+        </div>
+
+
+
+
+     <input class="image" type="file" id=upload accept=".jpg , .jpeg, .png">
+     <button class="cmprss" onclick="compress()">COMPRESS</button>
+      
+     <div  >
+            <img id="input"  height="300"width="300" alt="ORIGINAL IMAGE PREVIEW" />
+       </div>
+       <div>
+           <img id="output" height="300"width="300" alt="COMPRESSED IMAGE PREVIEW" />
+       </div>
+    </body>
+</html>
